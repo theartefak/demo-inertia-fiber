@@ -2,7 +2,7 @@ pkg/
 tmp/
 node_modules/
 public/*
-!public/manifest.json
+!public/favicon.ico
 .env
 go.work*
 database.db

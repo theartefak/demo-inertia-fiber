@@ -4,6 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/csrf"
+	"github.com/gofiber/fiber/v2/middleware/favicon"
 	"github.com/gofiber/fiber/v2/middleware/helmet"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -11,17 +12,30 @@ import (
 )
 
 func main() {
-	app := fiber.New()
+	engine := inertia.New()
 
-	app.Use(cors.New())
-	app.Use(csrf.New())
-	app.Use(helmet.New())
-	app.Use(limiter.New())
-	app.Use(logger.New())
-
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString(inertia.Inertia())
+	artefak := fiber.New(fiber.Config{
+		Views: engine,
 	})
 
-    app.Listen("127.0.1.1:8000")
+	artefak.Use(favicon.New(favicon.Config{
+		File: "./public/favicon.ico",
+	    URL: "/favicon.ico",
+	}))
+
+	artefak.Use(cors.New())
+	artefak.Use(csrf.New())
+	artefak.Use(helmet.New())
+	artefak.Use(limiter.New())
+	artefak.Use(logger.New())
+	artefak.Use(engine.Middleware())
+	artefak.Static("/assets", "public/build/assets")
+
+	artefak.Get("/", func(c *fiber.Ctx) error {
+		return c.Render("Index", fiber.Map{
+			"greeting": "Hello World",
+		})
+	}).Name("Welcome")
+
+    artefak.Listen("127.0.1.1:8000")
 }

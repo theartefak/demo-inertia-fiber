@@ -1,0 +1,14 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "concurrently --kill-others \"air\" \"vite\"",
+        "build": "vite build"
+    },
+    "devDependencies": {
+        "@inertiajs/vue3": "^1.0.14",
+        "@vitejs/plugin-vue": "^4.5.2",
+        "vite": "^5.0.10",
+        "vue": "^3.3.11",
+        "ziggy-js": "^1.8.1"
+  }
+}
