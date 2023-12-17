@@ -2,11 +2,11 @@ module github.com/theartefak/artefak
 
 go 1.21.5
 
-replace github.com/theartefak/inertia-fiber => ./pkg/inertia-fiber
+replace github.com/theartefak/inertia-fiber => ../inertia-fiber
 
 require (
 	github.com/gofiber/fiber/v2 v2.51.0
-	github.com/theartefak/inertia-fiber v0.0.0-00010101000000-000000000000
+	github.com/theartefak/inertia-fiber v0.0.0-20231216105241-8fd9ee089450
 )
 
 require (
