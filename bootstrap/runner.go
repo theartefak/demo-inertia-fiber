@@ -7,11 +7,14 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/favicon"
 	"github.com/gofiber/fiber/v2/middleware/helmet"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/theartefak/artefak/database"
 	"github.com/theartefak/artefak/routes"
 	"github.com/theartefak/inertia-fiber"
 )
 
 func Run() *fiber.App {
+	database.InitDB()
+
 	engine := inertia.New()
 
 	artefak := fiber.New(fiber.Config{

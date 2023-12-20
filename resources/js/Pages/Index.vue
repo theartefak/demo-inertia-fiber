@@ -3,6 +3,7 @@ import { Head } from '@inertiajs/vue3';
 
 defineProps({
     greeting: String,
+    users: Object | Array,
 });
 </script>
 

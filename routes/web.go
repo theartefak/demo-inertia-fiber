@@ -11,6 +11,7 @@ func (w *Web) RegisterRoute(app *fiber.App) {
 	route := app.Group("")
 
 	route.Get("/", controllers.Welcome).Name("Welcome")
+	route.Get("/create-dummy-user", controllers.CreateDummyUser).Name("CreateDummyUser")
 }
 
 func NewWeb() *Web {
