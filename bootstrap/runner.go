@@ -21,12 +21,14 @@ func Run() *fiber.App {
 		File: "./public/favicon.ico",
 	}))
 
-	app.Use(cors.New(cors.Config{
-		AllowOrigins: "*",
-	}))
+	app.Use(cors.New())
 	app.Use(csrf.New())
 	app.Use(engine.Middleware())
-	app.Use(helmet.New())
+	app.Use(helmet.New(helmet.Config{
+		CrossOriginOpenerPolicy: "cross-origin",
+		CrossOriginResourcePolicy: "cross-origin",
+		OriginAgentCluster: "?0",
+	}))
 	app.Use(logger.New())
 	app.Static("/assets", "public/build/assets")
 
