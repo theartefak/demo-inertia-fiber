@@ -6,7 +6,6 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/csrf"
 	"github.com/gofiber/fiber/v2/middleware/favicon"
 	"github.com/gofiber/fiber/v2/middleware/helmet"
-	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/theartefak/inertia-fiber"
 )
@@ -22,11 +21,12 @@ func Run() *fiber.App {
 		File: "./public/favicon.ico",
 	}))
 
-	app.Use(cors.New())
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "*",
+	}))
 	app.Use(csrf.New())
 	app.Use(engine.Middleware())
 	app.Use(helmet.New())
-	app.Use(limiter.New())
 	app.Use(logger.New())
 	app.Static("/assets", "public/build/assets")
 
