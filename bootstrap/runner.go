@@ -34,7 +34,7 @@ func Run() *fiber.App {
 		OriginAgentCluster: "?0",
 	}))
 	artefak.Use(logger.New())
-	artefak.Static("/assets", "public/build/assets")
+	artefak.Static("/assets", "public/build/assets").Name("asset")
 
 	routes.RegisterRoute(artefak)
 
