@@ -7,30 +7,33 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/favicon"
 	"github.com/gofiber/fiber/v2/middleware/helmet"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/theartefak/artefak/routes"
 	"github.com/theartefak/inertia-fiber"
 )
 
 func Run() *fiber.App {
 	engine := inertia.New()
 
-	app := fiber.New(fiber.Config{
+	artefak := fiber.New(fiber.Config{
 		Views: engine,
 	})
 
-	app.Use(favicon.New(favicon.Config{
+	artefak.Use(favicon.New(favicon.Config{
 		File: "./public/favicon.ico",
 	}))
 
-	app.Use(cors.New())
-	app.Use(csrf.New())
-	app.Use(engine.Middleware())
-	app.Use(helmet.New(helmet.Config{
+	artefak.Use(cors.New())
+	artefak.Use(csrf.New())
+	artefak.Use(engine.Middleware())
+	artefak.Use(helmet.New(helmet.Config{
 		CrossOriginOpenerPolicy: "cross-origin",
 		CrossOriginResourcePolicy: "cross-origin",
 		OriginAgentCluster: "?0",
 	}))
-	app.Use(logger.New())
-	app.Static("/assets", "public/build/assets")
+	artefak.Use(logger.New())
+	artefak.Static("/assets", "public/build/assets")
 
-	return app
+	routes.RegisterRoute(artefak)
+
+	return artefak
 }
