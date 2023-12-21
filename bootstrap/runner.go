@@ -12,12 +12,23 @@ import (
 	"github.com/theartefak/inertia-fiber"
 )
 
+type GlobalErrorHandlerResp struct {
+	Success bool `json:"success"`
+	Message string `json:"message"`
+}
+
 func Run() *fiber.App {
 	database.InitDB()
 
 	engine := inertia.New()
 
 	artefak := fiber.New(fiber.Config{
+		ErrorHandler: func(c *fiber.Ctx, err error) error {
+			return c.Status(fiber.StatusBadRequest).JSON(GlobalErrorHandlerResp{
+				Success: false,
+				Message: err.Error(),
+			})
+		},
 		Views: engine,
 	})
 
