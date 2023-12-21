@@ -7,7 +7,7 @@ replace github.com/theartefak/inertia-fiber => ../inertia-fiber
 require (
 	github.com/glebarez/sqlite v1.10.0
 	github.com/gofiber/fiber/v2 v2.51.0
-	github.com/theartefak/inertia-fiber v0.0.0-20231216105241-8fd9ee089450
+	github.com/theartefak/inertia-fiber v0.0.0-20231221225702-063a359e5b5f
 	gorm.io/gorm v1.25.5
 )
 
