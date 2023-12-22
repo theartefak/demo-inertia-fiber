@@ -1,6 +1,6 @@
 <script setup>
 import { Head, useForm } from '@inertiajs/vue3';
-import route from '@/Helpers/ziggy';
+import route from '@/Plugins/ziggy';
 
 defineProps({
     greeting: String,

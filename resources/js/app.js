@@ -1,7 +1,7 @@
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
-import { resolvePageComponent } from '@/Helpers';
-import { ZiggyVue } from '@/Helpers/ziggy/vue';
+import { resolvePageComponent } from '@/Plugins/vite/inertia-helpers';
+import { ZiggyVue } from '@/Plugins/ziggy/vue';
 import DefaultLayout from '@/Layouts/SimpleLayout.vue';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Artefak';
