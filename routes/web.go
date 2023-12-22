@@ -10,8 +10,8 @@ type Web struct{}
 func (w *Web) RegisterRoute(app *fiber.App) {
 	route := app.Group("")
 
-	route.Get("/", controllers.Welcome).Name("welcome")
-	route.Get("/create-dummy-user", controllers.CreateDummyUser).Name("create.dummy.user")
+	route.Get("", controllers.Welcome).Name("welcome")
+	route.Post("create-dummy-user", controllers.CreateDummyUser).Name("create.dummy.user")
 }
 
 func NewWeb() *Web {
