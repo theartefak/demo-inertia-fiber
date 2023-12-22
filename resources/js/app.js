@@ -1,7 +1,7 @@
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from '@/Helpers';
-import { ZiggyVue } from '../../node_modules/ziggy-js/dist/vue.m';
+import { ZiggyVue } from '@/Helpers/ziggy/vue';
 import DefaultLayout from '@/Layouts/SimpleLayout.vue';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Artefak';
@@ -16,7 +16,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         return createApp({ render: () => h(App, props) })
             .use(plugin)
-            .use(ZiggyVue, Ziggy)
+            .use(ZiggyVue)
             .mount(el);
     },
     progress: {
