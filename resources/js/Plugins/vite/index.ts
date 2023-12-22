@@ -2,8 +2,6 @@
 
 import fs from 'fs'
 import { AddressInfo } from 'net'
-import os from 'os'
-import { fileURLToPath } from 'url'
 import path from 'path'
 import colors from 'picocolors'
 import { Plugin, loadEnv, UserConfig, ConfigEnv, ResolvedConfig, SSROptions, PluginOption } from 'vite'
@@ -55,21 +53,6 @@ interface PluginConfig {
      * @default false
      */
     refresh?: boolean|string|string[]|RefreshConfig|RefreshConfig[]
-
-    /**
-     * Utilise the Herd or Valet TLS certificates.
-     *
-     * @default null
-     */
-    detectTls?: string|boolean|null,
-
-    /**
-     * Utilise the Herd or Valet TLS certificates.
-     *
-     * @default null
-     * @deprecated use "detectTls" instead
-     */
-    valetTls?: string|boolean|null,
 
     /**
      * Transform the code while serving.
@@ -304,8 +287,6 @@ function resolvePluginConfig(config: string|string[]|PluginConfig): Required<Plu
         ssrOutputDirectory: config.ssrOutputDirectory ?? 'bootstrap/ssr',
         refresh: config.refresh ?? false,
         hotFile: config.hotFile ?? path.join((config.publicDirectory ?? 'public'), 'hot'),
-        valetTls: config.valetTls ?? null,
-        detectTls: config.detectTls ?? config.valetTls ?? null,
         transformOnServe: config.transformOnServe ?? ((code) => code),
     }
 }
@@ -465,9 +446,3 @@ function resolveHostFromEnv(env: Record<string, string>): string|undefined
     }
 }
 
-/**
- * The directory of the current file.
- */
-function dirname(): string {
-    return fileURLToPath(new URL('.', import.meta.url))
-}
