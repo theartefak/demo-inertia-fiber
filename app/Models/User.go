@@ -14,12 +14,12 @@ type User struct {
 }
 
 func (u User) MarshalJSON() ([]byte, error) {
-    type Alias User
-    return json.Marshal(&struct {
-        Password string `json:"password"`
-        *Alias
-    }{
-        Password : "********",
-        Alias    : (*Alias)(&u),
-    })
+	type Alias User
+	return json.Marshal(&struct {
+		Password string `json:"password"`
+		*Alias
+	}{
+		Password : "********",
+		Alias    : (*Alias)(&u),
+	})
 }
