@@ -26,16 +26,16 @@ func CreateDummyUser(c *fiber.Ctx) error {
 	user := new(models.User)
 
 	// Validate the request data using the middleware
-	validate, parser := middleware.Validate(c, user)
+	validate, parser := middleware.Validate("Index", c, user)
 
+	// If parser errors exist, return a Internal server Error response
 	if parser != nil {
-		// If parser errors exist, return a Bad Request response
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"errors": parser})
+		return middleware.JSONResponse(c, fiber.StatusInternalServerError, parser)
 	}
 
+	// If validation errors exist, return a Status Found response
 	if validate != nil {
-		// If validation errors exist, return a Bad Request response
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"errors": validate})
+		return middleware.JSONResponse(c, fiber.StatusFound, validate)
 	}
 
 	// Save the user to the database
