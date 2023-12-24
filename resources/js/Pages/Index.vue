@@ -27,8 +27,11 @@ const submit = () => {
 
     <form @submit.prevent="submit">
         <input type="text" v-model="form.name" /><br />
+        <p v-text="form.errors.name" />
         <input type="text" v-model="form.email" /><br />
+        <p v-text="form.errors.email" />
         <input type="text" v-model="form.password" /><br />
+        <p v-text="form.errors.password" />
         <button>Save</button>
     </form>
 </template>

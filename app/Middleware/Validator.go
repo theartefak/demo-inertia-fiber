@@ -44,14 +44,10 @@ func Validate(component string, c *fiber.Ctx, model interface{}) (*ErrorResponse
 	if err := c.BodyParser(model); err != nil {
 		// Failed to parse request body, return error response
 		return &ErrorResponse{
-			Component: component,
-			Props: ResponseProps{
-				Errors: map[string]string{
-					"body": "Failed to parse request body",
-				},
-			},
-			URL:     strings.TrimPrefix(c.Get("Referer"), c.BaseURL()),
-			Version: c.GetRespHeader("X-Inertia-Version"),
+			Component : component,
+			Props     : ResponseProps{Errors: map[string]string{"body": "Failed to parse request body"}},
+			URL       : strings.TrimPrefix(c.Get("Referer"), c.BaseURL()),
+			Version   : c.GetRespHeader("X-Inertia-Version"),
 		}, err
 	}
 
@@ -60,12 +56,10 @@ func Validate(component string, c *fiber.Ctx, model interface{}) (*ErrorResponse
 	if len(validationErrors) > 0 {
 		// Construct error response for validation errors
 		response := &ErrorResponse{
-			Component: component,
-			Props: ResponseProps{
-				Errors: make(map[string]string),
-			},
-			URL:     strings.TrimPrefix(c.Get("Referer"), c.BaseURL()),
-			Version: c.GetRespHeader("X-Inertia-Version"),
+			Component : component,
+			Props     : ResponseProps{Errors: make(map[string]string)},
+			URL       : strings.TrimPrefix(c.Get("Referer"), c.BaseURL()),
+			Version   : c.GetRespHeader("X-Inertia-Version"),
 		}
 
 		// Map validation errors to user-friendly error messages
@@ -111,8 +105,4 @@ func validateStruct(validate *validator.Validate, model interface{}) []ErrorVali
 	}
 
 	return validationErrors
-}
-
-func JSONResponse(c *fiber.Ctx, statusCode int, data interface{}) error {
-	return c.Status(statusCode).JSON(data)
 }

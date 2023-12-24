@@ -30,12 +30,12 @@ func CreateDummyUser(c *fiber.Ctx) error {
 
 	// If parser errors exist, return a Internal server Error response
 	if parser != nil {
-		return middleware.JSONResponse(c, fiber.StatusInternalServerError, parser)
+		return c.Status(fiber.StatusInternalServerError).JSON(parser)
 	}
 
 	// If validation errors exist, return a Status Found response
 	if validate != nil {
-		return middleware.JSONResponse(c, fiber.StatusFound, validate)
+		return c.Status(fiber.StatusOK).JSON(validate)
 	}
 
 	// Save the user to the database
