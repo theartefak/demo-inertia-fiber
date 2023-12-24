@@ -8,7 +8,7 @@ require (
 	github.com/glebarez/sqlite v1.10.0
 	github.com/go-playground/validator/v10 v10.16.0
 	github.com/gofiber/fiber/v2 v2.51.0
-	github.com/theartefak/inertia-fiber v0.0.0-20231222160742-76918c98b363
+	github.com/theartefak/inertia-fiber v0.0.0-20231224050747-d0d3afb85c08
 	gorm.io/gorm v1.25.5
 )
 
