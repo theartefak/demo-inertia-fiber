@@ -36,7 +36,9 @@ func Run() *fiber.App {
 		CookieName: "XSRF-TOKEN",
 		SingleUseToken: true,
 	}))
-	artefak.Use(helmet.New())
+	artefak.Use(helmet.New(helmet.Config{
+		ReferrerPolicy: "strict-origin-when-cross-origin",
+	}))
 	artefak.Use(engine.Middleware())
 	artefak.Use(logger.New())
 	artefak.Use(recover.New())
