@@ -1,4 +1,4 @@
-module github.com/theartefak/artefak
+module github.com/theartefak/demo-inertia-fiber
 
 go 1.21.5
 
