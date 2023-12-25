@@ -8,39 +8,34 @@ import (
 )
 
 // Welcome handles the welcome page request.
-func Welcome(c *fiber.Ctx) error {
-	// Retrieve all users from the database
-	users := []models.User{}
-	database.DB.Find(&users)
+func Welcome(db *database.Database) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		// Retrieve all users from the database
+		users := []models.User{}
+		db.Find(&users)
 
-	// Render the welcome page with greeting and user data
-	return c.Render("Index", fiber.Map{
-		"greeting" : "Hello World",
-		"users"    : users,
-	})
+		// Render the welcome page with greeting and user data
+		return c.Render("Index", fiber.Map{
+			"greeting" : "Hello World",
+			"users"    : users,
+		})
+	}
 }
 
 // CreateDummyUser creates a new dummy user based on the request.
-func CreateDummyUser(c *fiber.Ctx) error {
-	// Create a new user instance
-	user := new(models.User)
+func CreateDummyUser(db *database.Database) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		// Create a new user instance
+		user := new(models.User)
 
-	// Validate the request data using the middleware
-	validate, parser := middleware.Validate("Index", c, user)
+		// If validation errors exist, return a Status Found response
+		if validate, err := middleware.Validate("Index", user)(c); err != nil {
+			return c.Status(302).JSON(validate)
+		}
 
-	// If parser errors exist, return a Internal server Error response
-	if parser != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(parser)
+		// Save the user to the database
+		db.Create(&user)
+
+		return nil
 	}
-
-	// If validation errors exist, return a Status Found response
-	if validate != nil {
-		return c.Status(fiber.StatusOK).JSON(validate)
-	}
-
-	// Save the user to the database
-	database.DB.Create(&user)
-
-	// Return a success response
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "Success"})
 }

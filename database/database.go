@@ -3,21 +3,17 @@ package database
 import (
 	"github.com/glebarez/sqlite"
 	"gorm.io/gorm"
-
-	models "github.com/theartefak/artefak/app/Models"
 )
 
-var DB *gorm.DB
+type Database struct {
+	*gorm.DB
+}
 
-func InitDB() {
+func New() (*Database, error) {
+	var db *gorm.DB
 	var err error
-	db, err := gorm.Open(sqlite.Open("database/database.db"), &gorm.Config{})
 
-	if err != nil {
-		panic(err)
-	}
+	db, err = gorm.Open(sqlite.Open("database/database.db"), &gorm.Config{})
 
-	db.AutoMigrate(&models.User{})
-
-	DB = db
+	return &Database{db}, err
 }
